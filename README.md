@@ -30,7 +30,7 @@ The code was tested on:
 └── schemas.py                                                                                    
 
     healthcare_booking
-    ├── ...
+    ├── __init__.py
     ├── docs                    # Documentation files (alternatively `doc`)
     │   ├── TOC.md              # Table of contents
     │   ├── faq.md              # Frequently asked questions
