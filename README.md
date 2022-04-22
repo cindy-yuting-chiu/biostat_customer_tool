@@ -26,7 +26,8 @@ The code was tested on:
     ├── main.py             
     ├── models.py             
     ├── schemas.py            
-    ├README.md               
+    ├README.md 
+    ├requirements.txt             
 
 * `__init__` file tells Python that sql with all its modules (Python files) is a package.
 * `database.py` file creates a local database session.
