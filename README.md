@@ -18,12 +18,12 @@ The code was tested on:
 - python==3.9.5
 
 ## Project Structure
-.
-└── healthcare_booking
-    ├── __init__.py
-    ├── crud.py
-    ├── database.py
-    ├── main.py
+
+├── healthcare_booking                  
+    ├── __init__.py                 
+    ├── crud.py                    
+    ├── database.py                   
+    ├── main.py                   
     ├── models.py
     └── schemas.py
 
