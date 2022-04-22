@@ -37,7 +37,7 @@ def create_doctor(doctor: schemas.Doctors, db: Session = Depends(get_db)):
     return crud.create_doctor(db=db, doctor=doctor)
 
 
-@app.get("/doctors/", response_model=list[schemas.Doctors])
+@app.get("/doctors/", response_model=List[schemas.Doctors])
 def read_doctors(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """Fetch doctors from Doctors Table."""
     doctors = crud.get_doctors(db, skip=skip, limit=limit)
@@ -65,4 +65,4 @@ def insert_appointment():
 def load_data(db: Session = Depends(get_db)):
     """Load data from text file to database."""
     crud.load_data(db)
-    pass
+    return {"ok": True}
