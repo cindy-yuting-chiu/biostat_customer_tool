@@ -33,7 +33,7 @@ The code was tested on:
 * `models.py` file creates models for database tables.
 * `schemas.py` file creates pydantic models to further validate field types of SQLAlchemy models: `models.py`.
 * `crud.py` files contains utility functions to interact with the data in the database.
-* `main.py` file is the Main Fast API to run the web services.
+* `main.py` file contains the main Fast API code to run the web services.
 
 ## Instruction
 
