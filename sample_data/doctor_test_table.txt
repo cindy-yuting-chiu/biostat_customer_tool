@@ -1,4 +1,4 @@
-DoctorID	DoctorName	Speciality	AvailableSlot
+DoctorID	DoctorName	Speciality	AvailableTime
 1	John Doe	Dermatologists	[2022-04-19 15:00,2022-04-19 15:30, 2022-04-19 16:00]  
 2	Hiram Archie	Family Physicians	[2022-04-19 10:00, 2022-04-19 11:00, 2022-04-20 13:00, 2022-04-21 13:00] 
 3	Otto Monte	Physiatrists	[2022-04-19 17:00, 2022-04-19 18:30, 2022-04-19 21:00] 
