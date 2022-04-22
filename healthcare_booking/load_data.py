@@ -6,7 +6,7 @@ import database
 db = database.SessionLocal()
 models.Base.metadata.create_all(bind=database.engine)
 
-with open("test_data/doctor_test_table.txt", "r", encoding="utf-8-sig") as f:
+with open("sample_data/doctor_test_table.txt", "r", encoding="utf-8-sig") as f:
     # skip header in the file
     next(f)
     for line in f:
@@ -17,7 +17,7 @@ with open("test_data/doctor_test_table.txt", "r", encoding="utf-8-sig") as f:
         )
         db.add(db_record)
 
-with open("test_data/appointment_table.txt", "r", encoding="utf-8-sig") as f:
+with open("sample_data/appointment_table.txt", "r", encoding="utf-8-sig") as f:
     # skip header in the file
     next(f)
     for line in f:

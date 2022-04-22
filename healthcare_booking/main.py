@@ -59,3 +59,10 @@ def delete_doctor(DoctorID: int):
 def insert_appointment():
     """Add an appointment to Appointment table."""
     pass
+
+
+@app.post("/loaddata/")
+def load_data(db: Session = Depends(get_db)):
+    """Load data from text file to database."""
+    crud.load_data(db)
+    pass
