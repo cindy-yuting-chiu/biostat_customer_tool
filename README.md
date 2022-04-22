@@ -31,9 +31,9 @@ The code was tested on:
 
     healthcare_booking
     ├── __init__.py
-    ├── docs                    # Documentation files (alternatively `doc`)
-    │   ├── TOC.md              # Table of contents
-    │   ├── faq.md              # Frequently asked questions
+    ├── crud.py                    # Documentation files (alternatively `doc`)
+    ├── database.py             # Table of contents
+    ├── main.py             # Frequently asked questions
     │   ├── misc.md             # Miscellaneous information
     │   ├── usage.md            # Getting started guide
     │   └── ...                 # etc.
