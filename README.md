@@ -29,7 +29,7 @@ The code was tested on:
             ├── models.py                                                                                     
             └── schemas.py                                                                                    
 
-    .
+    healthcare_booking
     ├── ...
     ├── docs                    # Documentation files (alternatively `doc`)
     │   ├── TOC.md              # Table of contents
