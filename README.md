@@ -20,13 +20,24 @@ The code was tested on:
 ## Project Structure
 
 .                                                                   
-└── healthcare_booking                                                                                        
+└── healthcare_booking 
+                                                                                       
             ├── __init__.py                                                                               
             ├── crud.py                                                                                 
             ├── database.py                                                                                   
             ├── main.py                                                                                       
             ├── models.py                                                                                     
             └── schemas.py                                                                                    
+
+    .
+    ├── ...
+    ├── docs                    # Documentation files (alternatively `doc`)
+    │   ├── TOC.md              # Table of contents
+    │   ├── faq.md              # Frequently asked questions
+    │   ├── misc.md             # Miscellaneous information
+    │   ├── usage.md            # Getting started guide
+    │   └── ...                 # etc.
+    └── ...
 
 
 * `__init__` file tells Python that sql with all its modules (Python files) is a package.
