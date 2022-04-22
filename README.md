@@ -1,6 +1,7 @@
 # Healthcare Booking Tool
 
 **Developers:** Cindy Chiu, Jaya Khan 
+
 **Target Industry:** Health care (Clinic/Doctor’s Office)
 
 ## Abstract
@@ -17,7 +18,6 @@ The code was tested on:
 - python==3.9.5
 
 ## Project Structure
-`
 .
 └── healthcare_booking
     ├── __init__.py
@@ -26,7 +26,8 @@ The code was tested on:
     ├── main.py
     ├── models.py
     └── schemas.py
-`
+
+
 * `__init__` file tells Python that sql with all its modules (Python files) is a package.
 * `database.py` file creates a local database session.
 * `models.py` file creates models for database tables.
