@@ -20,6 +20,7 @@ The code was tested on:
 ## Project Structure
 
 ├── healthcare_booking  
+        
         ├── __init__.py                 
         ├── crud.py                    
         ├── database.py                   
