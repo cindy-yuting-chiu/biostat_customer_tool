@@ -31,13 +31,12 @@ The code was tested on:
 
     healthcare_booking
     ├── __init__.py
-    ├── crud.py                    # Documentation files (alternatively `doc`)
-    ├── database.py             # Table of contents
-    ├── main.py             # Frequently asked questions
-    │   ├── misc.md             # Miscellaneous information
-    │   ├── usage.md            # Getting started guide
-    │   └── ...                 # etc.
-    └── ...
+    ├── crud.py                    
+    ├── database.py             
+    ├── main.py             
+    ├── models.py             
+    ├── schemas.py            
+    └── README.md               
 
 
 * `__init__` file tells Python that sql with all its modules (Python files) is a package.
