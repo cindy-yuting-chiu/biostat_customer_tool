@@ -27,10 +27,19 @@ def create_doctor(db: Session, doctor: schemas.DoctorCreate):
     db.refresh(db_user)
     return db_user
 
+def remove_all_doctors(db: Session):
+    """Remove all the records in the doctors table"""
+    db.query(models.Doctors).delete()
+    db.commit()
 
-def load_data(db: Session):
+def remove_all_appointments(db: Session):
+    """Remove all the records in the appointment table"""
+    db.query(models.Appointments).delete()
+    db.commit()
+
+def load_data_doctor(db: Session):
     """
-    Load sample files to the database for initialization
+    Load sample files to the database for initialization (doctor table)
     """
     with open("sample_data/doctor_test_table.txt", "r", encoding="utf-8-sig") as f:
     # skip header in the file
@@ -42,6 +51,13 @@ def load_data(db: Session):
                 DoctorID=row[0], DoctorName=row[1], Speciality=row[2], AvailableTime=row[3]
             )
             db.add(db_record)
+    db.commit()
+
+
+def load_data_appointment(db: Session):
+    """
+    Load sample files to the database for initialization (appointment table)
+    """
 
     with open("sample_data/appointment_table.txt", "r", encoding="utf-8-sig") as f:
         # skip header in the file

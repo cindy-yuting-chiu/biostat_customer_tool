@@ -60,9 +60,27 @@ def insert_appointment():
     """Add an appointment to Appointment table."""
     pass
 
-
-@app.post("/loaddata/")
+# load data to the table 
+@app.post("/loaddata/doctors")
 def load_data(db: Session = Depends(get_db)):
     """Load data from text file to database."""
-    crud.load_data(db)
+    crud.load_data_doctor(db)
     return {"ok": True}
+
+# load data to the table 
+@app.post("/loaddata/appointment")
+def load_data(db: Session = Depends(get_db)):
+    """Load data from text file to database."""
+    crud.load_data_appointment(db)
+    return {"ok": True}
+
+@app.delete("/cleardata/doctor")
+def clear_data(db: Session = Depends(get_db)):
+    crud.remove_all_doctors(db)
+    return {"ok": True}
+
+@app.delete("/cleardata/appointment")
+def clear_data(db: Session = Depends(get_db)):
+    crud.remove_all_appointments(db)
+    return {"ok": True}
+
