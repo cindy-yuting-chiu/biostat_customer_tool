@@ -20,12 +20,12 @@ The code was tested on:
 ## Project Structure
 
 ├── healthcare_booking  
-    ├── __init__.py                 
-    ├── crud.py                    
-    ├── database.py                   
-    ├── main.py                   
-    ├── models.py
-    └── schemas.py
+        ├── __init__.py                 
+        ├── crud.py                    
+        ├── database.py                   
+        ├── main.py                   
+        ├── models.py
+        └── schemas.py
 
 
 
