@@ -21,7 +21,7 @@ The code was tested on:
 
 .                                                                   
 └── healthcare_booking                                                                        
-            ├── __init__.py                                   
+            ├── __init__.py                                                                               
             ├── crud.py                                      
             ├── database.py                                  
             ├── main.py                                              
