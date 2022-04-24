@@ -29,7 +29,7 @@ The code was tested on:
     ├README.md 
     ├requirements.txt             
 
-* `__init__.py` file tells Python that sql with all its modules (Python files) is a package.
+* `__init__.py` file registers healhcare_booking as a package.
 * `database.py` file creates a local database session.
 * `models.py` file creates models for database tables.
 * `schemas.py` file creates pydantic models to further validate field types of SQLAlchemy models: `models.py`.
