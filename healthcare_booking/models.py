@@ -12,21 +12,21 @@ class Doctors(Base):
     DoctorID = Column(Integer, primary_key=True, index=True)
     DoctorName = Column(String(255))
     Speciality = Column(String(255))
-    AvailableTime = Column(String(1225))
+    AvailableTime = Column(DateTime)
     # relationship between these two tables
     # can be called using Doctors.appointment
-    # appointment = relationship("Appointments", back_populates="doctor")
+    # appointment = relationship("Appointments", uselist=False, backref="doctors")
 
 
-# Class for appointments table
 class Appointments(Base):
     """Create model for Appointments table."""
 
     __tablename__ = "appointments"
     AppointID = Column(Integer, primary_key=True, index=True)
-    DoctorID = Column(Integer, ForeignKey("doctors.DoctorID"))
     AppointmentTime = Column(DateTime)
     PatientID = Column(String(225))
+    DoctorID = Column(Integer, ForeignKey("doctors.DoctorID"))
+
     # relationship between these two tables
     # can be called using Appointments.doctor
-    # doctor = relationship("Doctors", back_populates="appointment")
+    # doctor = relationship("doctors", uselist=False)
