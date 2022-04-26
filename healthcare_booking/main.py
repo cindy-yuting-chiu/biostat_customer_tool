@@ -86,11 +86,13 @@ def delete_doctor(DoctorID: int):
 
 @app.delete("/cleardata/doctor")
 def clear_data(db: Session = Depends(get_db)):
+    """Delete all records in doctor table."""
     crud.remove_all_doctors(db)
     return {"ok": True}
 
 
 @app.delete("/cleardata/appointment")
 def clear_data(db: Session = Depends(get_db)):
+    """Delete all records in appointment table."""
     crud.remove_all_appointments(db)
     return {"ok": True}

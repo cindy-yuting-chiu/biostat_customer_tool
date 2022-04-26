@@ -40,6 +40,8 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
         AppointmentTime=appointment.AppointmentTime,
         PatientID=appointment.PatientID,
     )
+    # if the doctor was available at the time, 
+    # we need to delete that availability record
     db.query(models.Doctors).filter(
         models.Doctors.DoctorID == db_appointment.DoctorID
     ).delete()

@@ -3,9 +3,8 @@ from fastapi.testclient import TestClient
 from healthcare_booking.models import Base
 from healthcare_booking.main import app, get_db
 
-from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel import Session,  create_engine
 from sqlmodel.pool import StaticPool
-from sqlalchemy_utils import drop_database
 
 ## pytest fixtures
 ## these fixtures help us use the testing database instead of production

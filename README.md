@@ -20,7 +20,10 @@ The code was tested on:
 - SQLAlchemy==1.4.35
 - FastAPI==0.1.0
 - uvicorn==0.17.6
+- sqlmodel==0.0.6
 - python==3.9.5
+- pytest==7.1.2
+
 
 ## Project Structure
                                                                                
@@ -65,7 +68,7 @@ The code was tested on:
 We’ll generate synthetic data with doctor’s information and availability and create a separate file for testings. The sample data can be found under `sample_data` folder. There are two files: `doctor_test_table.txt` has sample doctor information and `appointment_table.txt` has sample appointments information. The user can use the loaddata function in the API to load all the sample data. Please see API docs for more information. 
 
 ### Testing
-The user can run the test using `pytest test/test_app.py` command. This will generate a test database that is different from the production database and performed tests on the test database. 
+The user can run the test using `pytest test/test_app.py` command. This will generate a test database that is different from the production database (`testing.db`) and performed tests on the test database. 
 
 ## References
 
