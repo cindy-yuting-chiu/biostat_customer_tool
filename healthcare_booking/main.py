@@ -74,12 +74,12 @@ def load_data(db: Session = Depends(get_db)):
     crud.load_data_appointment(db)
     return {"ok": True}
 
-@app.delete("/cleardata/doctor")
+@app.delete("/cleardata/doctors")
 def clear_data(db: Session = Depends(get_db)):
     crud.remove_all_doctors(db)
     return {"ok": True}
 
-@app.delete("/cleardata/appointment")
+@app.delete("/cleardata/appointments")
 def clear_data(db: Session = Depends(get_db)):
     crud.remove_all_appointments(db)
     return {"ok": True}
