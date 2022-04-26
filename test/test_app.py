@@ -7,7 +7,8 @@ from sqlmodel import Session, SQLModel, create_engine
 from sqlmodel.pool import StaticPool
 from sqlalchemy_utils import drop_database
 
-
+## pytest fixtures
+## these fixtures help us use the testing database instead of production
 @pytest.fixture(name="session")
 def session_fixture():
     # create a separate database for testing 
@@ -33,38 +34,115 @@ def client_fixture(session: Session):
 
 
 def test_create_doctor(client:TestClient):
+    """
+    Testing to create a valid doctor 
+    """
     response = client.post(  
-            "/doctors/", json={"DoctorID": '90', "DoctorName": "Jaya Khan", "Speciality":"Physician", "AvailableTime":'[]'}
-        )
+            "/doctors/", 
+            json = {
+  "DoctorName": "Jaya Khan",
+  "Speciality": "Physician",
+  "AvailableTime": "2022-04-26T15:43:55.143Z",
+  "DoctorID": 90}
+    )
     data = response.json()
     assert response.status_code == 200  
     assert data["DoctorID"] == 90 
     assert data["DoctorName"] == "Jaya Khan" 
 
-def test_loaddata_doctor(client: TestClient):
-    response = client.post("/loaddata/doctors")
+
+def test_bad_create_doctor(client:TestClient):
+    """
+    Testing if we try inserting a doctor using the same DoctorID
+    the app should reject it
+    """
+    response = client.post(  
+            "/doctors/", 
+            json = {
+  "DoctorName": "Cindy Chiu",
+  "Speciality": "Physician",
+  "AvailableTime": "2022-04-26T15:43:55.143Z",
+  "DoctorID": 90}
+    )
     data = response.json()
+    assert response.status_code == 400  
+
+
+
+def test_loaddata(client: TestClient):
+    """
+    Testing to load all the data from the sample file
+    (including appointment and doctor) 
+    """
+    response = client.post("/loaddata/")
     assert response.status_code == 200
-    assert len(data) == 1
-    assert response.json() == {"ok": True} 
+    assert response.json() == {"ok": True}
+ 
 
 def test_read_doctors(session: Session, client: TestClient):
-    response =  client.post(  # 
-            "/doctors/", json={"DoctorID": 100, "DoctorName": "Cindy Chiu", "Speciality":"Physician", "AvailableTime":'[]'}
-    )
-    session.commit()
+    """
+    Testing to read all the doctors we generated 
+    """
     response = client.get("/doctors/")
     data = response.json()
     assert response.status_code == 200
-    assert len(data) == 12
-    assert data[-1]["DoctorName"] == 'Cindy Chiu'
+    assert len(data) == 11
+    assert data[-1]["DoctorName"] == 'Jaya Khan'
  
+def test_read_appointments(client: TestClient):
+    """
+    Testing to read all the appointments we generated 
+    """
+    response = client.get("/appointments/")
+    data = response.json()
+    assert response.status_code == 200
+    assert len(data) == 10
 
 
+def test_create_appointments(client: TestClient):
+    """
+    Testing to create a valid appiontment
+    """
+    response = client.post("/appointment/", 
+                json = {
+  "DoctorID": 10,
+  "AppointmentTime": "2022-04-26T15:29:44.155Z",
+  "PatientID": "cinchiu",
+  "AppointID": 12
+})
+    assert response.status_code == 200
 
+def test_bad_create_appointments(client: TestClient):
+    """
+    Testing to create a invalid appiontment
+    The doctor is not available
+    """
+    response = client.post("/appointment/", 
+                json = {
+  "DoctorID": 20,
+  "AppointmentTime": "2022-04-27T15:29:44.155Z",
+  "PatientID": "cinchiu",
+  "AppointID": 13
+})
+    assert response.status_code == 400
 
+## test clearing the database
+## needs to be in the last testing functions 
+## so the user can re-run the test
 def test_clearall_doctor(client: TestClient):
-
-    response = client.delete("/cleardata/doctors")
+    """
+    Testing to remove all the records in the doctor table 
+    """
+    response = client.delete("/cleardata/doctor")
     assert response.status_code == 200
     assert response.json() == {"ok": True} 
+
+
+def test_clearall_appointment(client: TestClient):
+    """
+    Testing to remove all the records in the appointment table 
+    """
+    response = client.delete("/cleardata/appointment")
+    assert response.status_code == 200
+    assert response.json() == {"ok": True} 
+

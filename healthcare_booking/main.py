@@ -3,6 +3,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from sqlalchemy.orm import Session
 from . import models, schemas, crud, load_data
 from .database import SessionLocal, engine
+from typing import List
 
 # Create database tables.
 models.Base.metadata.create_all(bind=engine)
@@ -36,18 +37,19 @@ def loaddata(db: Session = Depends(get_db)):
     return {"ok": True}
 
 
-@app.get("/doctors/", response_model=list[schemas.Doctors])
+@app.get("/doctors/", response_model=List[schemas.Doctors])
 def read_doctors(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """Fetch doctors records from Doctors Table."""
     doctors = crud.get_doctors(db, skip=skip, limit=limit)
     return doctors
 
 
-@app.get("/appointments/", response_model=list[schemas.Appointments])
+@app.get("/appointments/", response_model=List[schemas.Appointments])
 def read_appointments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """Fetch appointments records from Appointments Table."""
     appointments = crud.get_appointments(db, skip=skip, limit=limit)
     return appointments
+
 
 
 @app.post("/doctors/", response_model=schemas.Doctors)
@@ -64,6 +66,9 @@ def create_appointment(
     appointment: schemas.Appointments, db: Session = Depends(get_db)
 ):
     """Add an appointment to Appointment table."""
+    db_user = crud.get_doctor_by_id(db, DoctorID=appointment.DoctorID)
+    if db_user == None:
+        raise HTTPException(status_code=400, detail="Doctor ID not exist")
     return crud.create_appointment(db=db, appointment=appointment)
 
 
