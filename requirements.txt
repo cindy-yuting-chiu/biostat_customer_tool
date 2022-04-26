@@ -3,3 +3,5 @@ FastAPI==0.1.0
 uvicorn==0.17.6
 sqlalchemy2-stubs==0.0.2a22
 sqlmodel==0.0.6
+pytest==7.1.2
+typing-extensions==4.2.0
