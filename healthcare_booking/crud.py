@@ -1,5 +1,4 @@
 """Utility functions to interact with the data in the database."""
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from . import models, schemas
 
@@ -17,19 +16,6 @@ def get_appointments(db: Session, skip: int = 0, limit: int = 100):
 def get_doctor_by_id(db: Session, DoctorID: int):
     """Fetch doctor data by DoctorID from Doctors table."""
     return db.query(models.Doctors).filter(models.Doctors.DoctorID == DoctorID).first()
-
-
-"""Add a delete doctor funtion and use it in main file"""
-
-
-def delete_available_slot(db: Session, DoctorID: str, AppointmentTime: str):
-    print("inside delete slot function########")
-    print(DoctorID, AppointmentTime)
-    return (
-        db.query(models.Appointments)
-        .filter(models.Appointments.doctor == DoctorID)
-        .delete()
-    )
 
 
 def create_doctor(db: Session, doctor: schemas.DoctorCreate):
@@ -64,17 +50,13 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
     return db_appointment
 
 
-# def load_data(db: Session):
-#     ld = Loaddata()
-#     ld.load_data(db)
-#     return {"ok": True}
+def remove_all_doctors(db: Session):
+    """Remove all the records in the doctors table"""
+    db.query(models.Doctors).delete()
+    db.commit()
 
 
-def delete_doctor(db: Session, DoctorID):
-    pass
-    # doctor = db.get(models.Doctors, DoctorID)
-    # if not doctor:
-    #     raise HTTPException(status_code=404, detail="Doctor not found")
-    # db.delete(doctor)
-    # db.commit()
-    # return {"ok": True}
+def remove_all_appointments(db: Session):
+    """Remove all the records in the appointment table"""
+    db.query(models.Appointments).delete()
+    db.commit()

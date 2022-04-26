@@ -33,6 +33,7 @@ def get_db(request: Request):
 def loaddata(db: Session = Depends(get_db)):
     """Load data from text file to database."""
     load_data.loaddata(db)
+    return {"ok": True}
 
 
 @app.get("/doctors/", response_model=list[schemas.Doctors])
@@ -76,3 +77,15 @@ def delete_doctor(DoctorID: int):
         session.delete(doctor)
         session.commit()
         return {"ok": True}
+
+
+@app.delete("/cleardata/doctor")
+def clear_data(db: Session = Depends(get_db)):
+    crud.remove_all_doctors(db)
+    return {"ok": True}
+
+
+@app.delete("/cleardata/appointment")
+def clear_data(db: Session = Depends(get_db)):
+    crud.remove_all_appointments(db)
+    return {"ok": True}
