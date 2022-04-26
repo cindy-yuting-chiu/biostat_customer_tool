@@ -1,4 +1,5 @@
 """This file is used to create pydantic models (validate field types of SQLAlchemy models)."""
+from datetime import datetime
 from pydantic import BaseModel
 
 
@@ -7,7 +8,7 @@ class DoctorsBase(BaseModel):
 
     DoctorName: str
     Speciality: str
-    AvailableTime: str
+    AvailableTime: datetime
 
 
 class DoctorCreate(DoctorsBase):
@@ -29,7 +30,8 @@ class AppointmentsBase(BaseModel):
     """Common attributes of appointment."""
 
     DoctorID: int
-    AppointmentTime: str
+    AppointmentTime: datetime
+    PatientID: str
 
 
 class AppointmentCreate(AppointmentsBase):
@@ -40,7 +42,6 @@ class Appointments(AppointmentsBase):
     """Unique attributes of appointment."""
 
     AppointID: int
-    PatientID: str
 
     class Config:
         """Provide configurations to Pydantic."""

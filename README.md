@@ -23,7 +23,8 @@ The code was tested on:
     ├── __init__.py
     ├── crud.py                    
     ├── database.py             
-    ├── main.py             
+    ├── main.py 
+    ├── load_data.py           
     ├── models.py             
     ├── schemas.py    
     test
@@ -39,6 +40,7 @@ The code was tested on:
 * `schemas.py` file creates pydantic models to further validate field types of SQLAlchemy models: `models.py`.
 * `crud.py` files contains utility functions to interact with the data in the database.
 * `main.py` file contains the main Fast API code to run the web services.
+* `load_data.py` files insert records from text files from `sample_data` folder into database tables.
 
 ## Instruction
 
@@ -50,7 +52,9 @@ The code was tested on:
 
 ### Run
 
-`uvicorn healthcare_booking.main:app --reload` will run the web service on the local server.
+1. Execute `uvicorn healthcare_booking.main:app --reload` to run the web service on local server.
+2. Hit http://<host_name>:<port_number>/docs on the browser to test the APIs.
+
 
 ### Sample Data
 We’ll generate synthetic data with doctor’s information and availability and create a separate file for testings. The sample data can be found under `sample_data` folder. There are two files: `doctor_test_table.txt` has sample doctor information and `appointment_table.txt` has sample appointments information. The user can use the loaddata function in the API to load all the sample data. Please see API docs for more information. 
@@ -66,3 +70,4 @@ The user can run the test using `pytest test/test_app.py` command. This will gen
 
 [3] SQLAlchemy for FastAPI, https://fastapi.tiangolo.com/tutorial/sql-databases/
 
+[4] Cascade operations, https://docs.sqlalchemy.org/en/14/orm/cascades.html

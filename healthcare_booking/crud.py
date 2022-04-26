@@ -1,12 +1,16 @@
 """Utility functions to interact with the data in the database."""
 from sqlalchemy.orm import Session
 from . import models, schemas
-from datetime import datetime
 
 
 def get_doctors(db: Session, skip: int = 0, limit: int = 100):
     """Fetch doctors data from Doctors table."""
     return db.query(models.Doctors).offset(skip).limit(limit).all()
+
+
+def get_appointments(db: Session, skip: int = 0, limit: int = 100):
+    """Fetch appointments data from Appointments table."""
+    return db.query(models.Appointments).offset(skip).limit(limit).all()
 
 
 def get_doctor_by_id(db: Session, DoctorID: int):
@@ -27,49 +31,32 @@ def create_doctor(db: Session, doctor: schemas.DoctorCreate):
     db.refresh(db_user)
     return db_user
 
+
+def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
+    """Add an appointment to the Appointment table."""
+    db_appointment = models.Appointments(
+        AppointID=appointment.AppointID,
+        DoctorID=appointment.DoctorID,
+        AppointmentTime=appointment.AppointmentTime,
+        PatientID=appointment.PatientID,
+    )
+    db.query(models.Doctors).filter(
+        models.Doctors.DoctorID == db_appointment.DoctorID
+    ).delete()
+    db.add(db_appointment)
+    db.query()
+    db.commit()
+    db.refresh(db_appointment)
+    return db_appointment
+
+
 def remove_all_doctors(db: Session):
     """Remove all the records in the doctors table"""
     db.query(models.Doctors).delete()
     db.commit()
 
+
 def remove_all_appointments(db: Session):
     """Remove all the records in the appointment table"""
     db.query(models.Appointments).delete()
-    db.commit()
-
-def load_data_doctor(db: Session):
-    """
-    Load sample files to the database for initialization (doctor table)
-    """
-    with open("sample_data/doctor_test_table.txt", "r", encoding="utf-8-sig") as f:
-    # skip header in the file
-        next(f)
-        for line in f:
-            row = line.strip().split("\t")
-            # add records to the doctors table
-            db_record = models.Doctors(
-                DoctorID=row[0], DoctorName=row[1], Speciality=row[2], AvailableTime=row[3]
-            )
-            db.add(db_record)
-    db.commit()
-
-
-def load_data_appointment(db: Session):
-    """
-    Load sample files to the database for initialization (appointment table)
-    """
-
-    with open("sample_data/appointment_table.txt", "r", encoding="utf-8-sig") as f:
-        # skip header in the file
-        next(f)
-        for line in f:
-            row = line.strip().split("\t")
-            # add records to the appointment table
-            db_record = models.Appointments(
-                AppointID=row[0],
-                DoctorID=row[1],
-                AppointmentTime=datetime.strptime(row[2], "%Y-%m-%d %H:%M"),
-                PatientID=row[3],
-            )
-            db.add(db_record)
     db.commit()

@@ -1,8 +1,7 @@
 """Main file to run FastAPI."""
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from sqlalchemy.orm import Session
-from typing import List
-from . import models, schemas, crud
+from . import models, schemas, crud, load_data
 from .database import SessionLocal, engine
 
 # Create database tables.
@@ -27,21 +26,45 @@ def get_db(request: Request):
     return request.state.db
 
 
-#### Create APIs ####
+############ Create APIs ###############
+
+
+@app.post("/loaddata/")
+def loaddata(db: Session = Depends(get_db)):
+    """Load data from text file to database."""
+    load_data.loaddata(db)
+    return {"ok": True}
+
+
+@app.get("/doctors/", response_model=list[schemas.Doctors])
+def read_doctors(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """Fetch doctors records from Doctors Table."""
+    doctors = crud.get_doctors(db, skip=skip, limit=limit)
+    return doctors
+
+
+@app.get("/appointments/", response_model=list[schemas.Appointments])
+def read_appointments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """Fetch appointments records from Appointments Table."""
+    appointments = crud.get_appointments(db, skip=skip, limit=limit)
+    return appointments
+
+
 @app.post("/doctors/", response_model=schemas.Doctors)
 def create_doctor(doctor: schemas.Doctors, db: Session = Depends(get_db)):
     """Add a doctor to Doctors table."""
     db_user = crud.get_doctor_by_id(db, DoctorID=doctor.DoctorID)
     if db_user:
-        raise HTTPException(status_code=400, detail="ID already registered")
+        raise HTTPException(status_code=400, detail="ID already registered.")
     return crud.create_doctor(db=db, doctor=doctor)
 
 
-@app.get("/doctors/", response_model=List[schemas.Doctors])
-def read_doctors(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    """Fetch doctors from Doctors Table."""
-    doctors = crud.get_doctors(db, skip=skip, limit=limit)
-    return doctors
+@app.post("/appointment/", response_model=schemas.Appointments)
+def create_appointment(
+    appointment: schemas.Appointments, db: Session = Depends(get_db)
+):
+    """Add an appointment to Appointment table."""
+    return crud.create_appointment(db=db, appointment=appointment)
 
 
 @app.delete("/doctors/{DoctorID}")
@@ -56,31 +79,13 @@ def delete_doctor(DoctorID: int):
         return {"ok": True}
 
 
-def insert_appointment():
-    """Add an appointment to Appointment table."""
-    pass
-
-# load data to the table 
-@app.post("/loaddata/doctors")
-def load_data(db: Session = Depends(get_db)):
-    """Load data from text file to database."""
-    crud.load_data_doctor(db)
-    return {"ok": True}
-
-# load data to the table 
-@app.post("/loaddata/appointment")
-def load_data(db: Session = Depends(get_db)):
-    """Load data from text file to database."""
-    crud.load_data_appointment(db)
-    return {"ok": True}
-
-@app.delete("/cleardata/doctors")
+@app.delete("/cleardata/doctor")
 def clear_data(db: Session = Depends(get_db)):
     crud.remove_all_doctors(db)
     return {"ok": True}
 
-@app.delete("/cleardata/appointments")
+
+@app.delete("/cleardata/appointment")
 def clear_data(db: Session = Depends(get_db)):
     crud.remove_all_appointments(db)
     return {"ok": True}
-
