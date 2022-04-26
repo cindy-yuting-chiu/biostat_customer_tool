@@ -8,7 +8,12 @@
 This tool is aiming to help a clinic build a tool for patients to book a doctor’s appointment. We want to check if the doctor is available at a certain time/location. 
 
 ## Project Development Plan 
-The project will be developed in two parts, the first part is to build a simple API or database that has all the doctor’s availability. We will store doctors’ information in a Doctor’s table, store patient information in a Patient table, and we’ll have an appointment table that can link appointment information with patient and doctor information. The API should be able to update the availability database if the patient makes an appointment using the tool. The second part will be building the user interface. It will either be a mobile application (native or hybrid) using Python framework (kivy or beeware) or a web application using Python framework (flask probably). 
+This project is developed in three parts. First, we designed the database tables using SQL Alchemy APIs - Appointments and Doctors tables. Second, we designed the project strucutre using both Fast API and SQL Alchemy APIs. Third, we wrote test cases to test our REST APIs for healthcare booking tool. 
+
+The Appoinments table is linked to Doctors table and every time an appointment is booked, our post API adds an appointment to Appointments table and removes an entry for available slot from Doctors table. 
+
+## Current Limitation and Future Scope
+At the moment, we can have just one slot per doctor in Doctors table. We planned to link Doctors table with another table - Slots - to link multiple available slots for a doctor in Doctors table. We also plan to integrate these backened APIs with a front end mobile UI using a Kivy python framework.
 
 ## Requirements
 The code was tested on:
