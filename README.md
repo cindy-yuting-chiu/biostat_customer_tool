@@ -25,9 +25,13 @@ The code was tested on:
     ├── database.py             
     ├── main.py             
     ├── models.py             
-    ├── schemas.py            
+    ├── schemas.py    
+    test
+    ├── __init__.py
+    ├──test_app.py 
     ├README.md 
-    ├requirements.txt             
+    ├requirements.txt 
+ 
 
 * `__init__.py` file registers healhcare_booking as a package.
 * `database.py` file creates a local database session.
@@ -48,8 +52,11 @@ The code was tested on:
 
 `uvicorn healthcare_booking.main:app --reload` will run the web service on the local server.
 
+### Sample Data
+We’ll generate synthetic data with doctor’s information and availability and create a separate file for testings. The sample data can be found under `sample_data` folder. There are two files: `doctor_test_table.txt` has sample doctor information and `appointment_table.txt` has sample appointments information. The user can use the loaddata function in the API to load all the sample data. Please see API docs for more information. 
+
 ### Testing
-We’ll generate synthetic data with doctor’s information and availability and create a separate file for testings. Users should be able to run the testing file separately. 
+The user can run the test using `pytest test/test_app.py` command. This will generate a test database that is different from the production database and performed tests on the test database. 
 
 ## References
 
