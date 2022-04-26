@@ -51,7 +51,6 @@ def read_appointments(skip: int = 0, limit: int = 100, db: Session = Depends(get
     return appointments
 
 
-
 @app.post("/doctors/", response_model=schemas.Doctors)
 def create_doctor(doctor: schemas.Doctors, db: Session = Depends(get_db)):
     """Add a doctor to Doctors table."""
